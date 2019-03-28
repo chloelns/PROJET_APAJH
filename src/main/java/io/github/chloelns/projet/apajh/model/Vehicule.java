@@ -1,23 +1,52 @@
 package io.github.chloelns.projet.apajh.model;
 
+import io.github.chloelns.projet.apajh.model.comparators.ReservationComparator;
+
+import javax.persistence.*;
+import java.util.Set;
+import java.util.TreeSet;
+
+@Entity
 public class Vehicule {
+    //Attributs de l'Entity
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Version
+    private int version;
+
     //Attributs
-    private String plaqueImmatriculation;
+    private String immatriculation;
     private String marque;
+    @OneToMany(mappedBy = "vehicule")
+    private Set<Reservation> reservations = new TreeSet<>(new ReservationComparator());
 
     //Constructeur
-    public Vehicule(String plaqueImmatriculation, String marque) {
-        this.plaqueImmatriculation = plaqueImmatriculation;
+    public Vehicule() {
+    }
+
+    public Vehicule(String immatriculation, String marque) {
+        this.immatriculation = immatriculation;
         this.marque = marque;
     }
 
-    //Getters et Setters
-    public String getPlaqueImmatriculation() {
-        return plaqueImmatriculation;
+    //Getters et Setters de l'Entity
+    public Long getId() {
+        return id;
     }
 
-    public void setPlaqueImmatriculation(String plaqueImmatriculation) {
-        this.plaqueImmatriculation = plaqueImmatriculation;
+    public int getVersion() {
+        return version;
+    }
+
+    //Getters et Setters
+
+    public String getImmatriculation() {
+        return immatriculation;
+    }
+
+    public void setImmatriculation(String immatriculation) {
+        this.immatriculation = immatriculation;
     }
 
     public String getMarque() {
@@ -28,12 +57,12 @@ public class Vehicule {
         this.marque = marque;
     }
 
-    //toString
-    @Override
-    public String toString() {
-        return "Vehicule{" +
-                "plaqueImmatriculation='" + plaqueImmatriculation + '\'' +
-                ", marque='" + marque + '\'' +
-                '}';
+    public Set<Reservation> getReservations() {
+        return reservations;
     }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
 }

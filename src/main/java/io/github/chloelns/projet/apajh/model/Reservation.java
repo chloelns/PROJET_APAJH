@@ -1,22 +1,51 @@
 package io.github.chloelns.projet.apajh.model;
 
-import java.sql.Date;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
+@Entity
 public class Reservation {
+    //Attributs de l'Entity
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Version
+    private int version;
     //Attributs
+    @ManyToOne
     private Utilisateur utilisateur;
+    @ManyToOne
     private Vehicule vehicule;
-    private Date dateDebutReservation;
-    private Date dateFinReservation;
-    private Boolean vehiculeRendu;
+    private LocalDateTime dateDebutReservation;
+    private LocalDateTime dateFinReservation;
+    private boolean vehiculeRendu;
 
     //Constructeur
-    public Reservation(Utilisateur utilisateur, Vehicule vehicule, Date dateDebutReservation, Date dateFinReservation, Boolean vehiculeRendu) {
+
+
+    public Reservation() {
+    }
+
+    public Reservation(Utilisateur utilisateur,
+                       Vehicule vehicule,
+                       LocalDateTime dateDebutReservation,
+                       LocalDateTime dateFinReservation,
+                       boolean vehiculeRendu) {
+
         this.utilisateur = utilisateur;
         this.vehicule = vehicule;
         this.dateDebutReservation = dateDebutReservation;
         this.dateFinReservation = dateFinReservation;
         this.vehiculeRendu = vehiculeRendu;
+    }
+
+    //Getters et Setters de l'Entity
+    public Long getId() {
+        return id;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     //Getters et Setters
@@ -36,39 +65,27 @@ public class Reservation {
         this.vehicule = vehicule;
     }
 
-    public Date getDateDebutReservation() {
+    public LocalDateTime getDateDebutReservation() {
         return dateDebutReservation;
     }
 
-    public void setDateDebutReservation(Date dateDebutReservation) {
+    public void setDateDebutReservation(LocalDateTime dateDebutReservation) {
         this.dateDebutReservation = dateDebutReservation;
     }
 
-    public Date getDateFinReservation() {
+    public LocalDateTime getDateFinReservation() {
         return dateFinReservation;
     }
 
-    public void setDateFinReservation(Date dateFinReservation) {
+    public void setDateFinReservation(LocalDateTime dateFinReservation) {
         this.dateFinReservation = dateFinReservation;
     }
 
-    public Boolean getVehiculeRendu() {
+    public boolean isVehiculeRendu() {
         return vehiculeRendu;
     }
 
-    public void setVehiculeRendu(Boolean vehiculeRendu) {
+    public void setVehiculeRendu(boolean vehiculeRendu) {
         this.vehiculeRendu = vehiculeRendu;
-    }
-
-    //toString
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "utilisateur=" + utilisateur +
-                ", vehicule=" + vehicule +
-                ", dateDebutReservation=" + dateDebutReservation +
-                ", dateFinReservation=" + dateFinReservation +
-                ", vehiculeRendu=" + vehiculeRendu +
-                '}';
     }
 }

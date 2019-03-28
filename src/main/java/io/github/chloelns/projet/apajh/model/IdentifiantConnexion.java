@@ -1,19 +1,40 @@
 package io.github.chloelns.projet.apajh.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class IdentifiantConnexion {
+    //Attributs de l'Entity
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Version
+    private int version;
+
     //Attributs
     private String login;
     private String password;
-    private List<String> roles = new ArrayList<>();
+    private boolean admin;
+    @OneToOne
+    private Utilisateur utilisateur;
 
     //Constructeur
-    public IdentifiantConnexion(String login, String password, List<String> roles) {
+    public IdentifiantConnexion() {
+    }
+
+    public IdentifiantConnexion(String login, String password, boolean admin) {
         this.login = login;
         this.password = password;
-        this.roles = roles;
+        this.admin = admin;
+    }
+
+    //Getters et Setters de l'Entity
+    public Long getId() {
+        return id;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     //Getters et Setters
@@ -33,21 +54,19 @@ public class IdentifiantConnexion {
         this.password = password;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
-    //toString
-    @Override
-    public String toString() {
-        return "IdentifiantConnexion{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }
